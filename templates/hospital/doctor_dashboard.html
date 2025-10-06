@@ -1,0 +1,95 @@
+
+{% extends 'hospital/doctor_base.html' %}
+{% load static %}
+{% load custom_tags %}
+{% block content %}
+{%include 'hospital/doctor_dashboard_cards.html'%}
+<!--
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="panel panel-primary" style="margin-left:15%;">
+      <div class="panel-heading" style="text-align:center;">
+        <h6 class="panel-title">Recent Appointments For You</h6>
+      </div>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Picture</th>
+            <th>Description</th>
+            <th>Mobile</th>
+            <th>Address</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        {% for a,p in appointments %}
+        <tr>
+          <td>{{a.patientName}}</td>
+          <td> <img src="{% static p.profile_pic.url %}" alt="Profile Pic" height="40px" width="40px" /></td>
+          <td>{{a.description}}</td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+          <td>{{a.appointmentDate}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+-->
+
+<br><br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="panel panel-primary" style="margin-left:15%;">
+      <div class="panel-heading" style="text-align:center;">
+        <h6 class="panel-title">Recent Appointments in {{ doctor.department }} Department</h6>
+      </div>
+      <table class="table table-hover" id="dev-table">
+        <thead>
+          <tr>
+            <th>Patient Name</th>
+            <th>Profile</th>
+            <th>Symptoms</th>
+            <th>Assigned Doctor</th>  <!-- New Column -->
+            <th>Contact</th>
+            <th>Location</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        {% for a,p in appointments %}
+        <tr>
+          <td>{{a.patientName}}</td>
+          <td><img src="{% static p.profile_pic.url %}" 
+                 alt="Patient Profile" height="40px" width="40px" /></td>
+          <td>{{a.description}}</td>
+          <td>
+            {{ a.doctorId|get_doctor_name }}  <!-- Using the template filter -->
+          </td>
+          <td>{{p.mobile}}</td>
+          <td>{{p.address}}</td>
+          <td>{{a.appointmentDate}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div>
+  </div>
+</div>
+
+<style>
+  .panel-title {
+    font-size: 1.2em;
+    color: #31708f;
+    font-weight: bold;
+  }
+  #dev-table th {
+    background-color: #d9edf7;
+  }
+  .table-hover tbody tr:hover {
+    background-color: #f5f5f5;
+  }
+</style>
+
+{% endblock content %}
